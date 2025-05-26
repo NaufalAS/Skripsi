@@ -1,0 +1,84 @@
+.dashboard-content {
+  padding: 2rem;
+}
+
+.dashboard-title {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-top: 50px;
+}
+
+.summary-cards {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.summary-card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  flex: 1;
+  min-width: 200px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.summary-card:hover {
+  transform: translateY(-5px);
+}
+
+.summary-card h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: #666;
+}
+
+.summary-value {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+}
+
+.chart-box {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chart-box h3 {
+  margin-bottom: 1.2rem;
+  font-size: 1.3rem;
+}
+
+.chart-box canvas {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 350px; /* Batasi tinggi maksimal supaya tidak terlalu panjang */
+}
+
+.chart-doughnut {
+  width: 430px;
+  height: 430px;
+  max-width: 100%;
+  aspect-ratio: 1 / 1; /* Biar selalu bulet */
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+

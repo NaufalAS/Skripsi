@@ -1,0 +1,201 @@
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 200px;
+}
+
+.profile-page {
+  flex: 1;
+  padding: 20px;
+  background-color: #98adea;
+  margin-top: 40px;
+  min-height: calc(100vh - 60px);
+}
+.profileone{
+  margin-top: 50px;
+  margin-left: 40px;
+}
+.profile-layout {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  background-color: transparent;
+  margin-left: 30px;
+}
+
+/* Photo Section */
+.profile-photo-section {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.profile-photo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.profile-photo {
+  margin-top: 10px;
+  width: 470px;
+  height: 470px;
+  border-radius: 10px;
+  background-color: #f0f0f0;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Info Section */
+.profile-info-section {
+  flex: 20;
+  padding: 10px;
+  color: #333;
+}
+
+.profile-info {
+  margin-bottom: 10px;
+}
+
+.info-row {
+  display: flex;
+  flex-direction: column; /* Default: label di atas input */
+  margin-top: 18px;
+  margin-bottom: 48px;
+  font-size: 20px;
+  padding: 13px;
+  padding-top: 13px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 5px;
+  width: 750px;
+}
+
+.info-row.editing {
+  flex-direction: row; /* Saat editing, label dan input berada di samping */
+  align-items: center; /* Menjaga label dan input sejajar secara vertikal */
+}
+
+.info-row strong {
+  font-weight: bold;
+  margin-right: 10px; /* Memberikan jarak antara label dan input saat editing */
+  width: 150px; /* Konsisten lebar untuk label */
+}
+
+.info-row input {
+  padding: 15px;
+  font-size: 14px;
+  width: 100%;
+  max-width: 500px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  /* margin-top: 20px; */
+}
+
+.info-row span {
+  display: block;
+  margin-top: 5px; /* Memberikan jarak antara value dan label saat non-editing */
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-edit-password {
+  background-color: #1e293b;
+  color: white;
+  height: 50px;
+  width: 130px;
+}
+
+.btn-save {
+  background-color: #22c55e;
+  color: white;
+   height: 60px;
+  width: 130px;
+}
+
+.btn-cancel {
+  background-color: #ef4444;
+  color: white;
+  height: 60px;
+  width: 130px;
+  margin-right: 20px;
+}
+
+.change-photo-btn {
+  background: transparent;
+  color: #1e293b;
+  border: 2px dashed #1e293b;
+  padding: 5px 25px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+  height: 60px;
+  width: 200px;
+}
+
+.change-photo-btn:hover {
+  background: #1e293b;
+  color: white;
+}
+
+
+/* Responsive */
+@media (max-width: 992px) {
+  .profile-layout {
+    flex-direction: column;
+  }
+
+  .profile-photo {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+  }
+
+  .profile-page {
+    padding: 15px;
+    margin-top: 70px;
+  }
+}
+
+/* Styling for button and file input container */
+.input-file-container {
+  margin-top: 10px;
+}
+
+.input-file-container button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.input-file-container button:hover {
+  background-color: #45a049;
+}

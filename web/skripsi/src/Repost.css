@@ -1,0 +1,67 @@
+.dashboard-repots{
+  margin-top: 30px;
+  margin-left: 10px;
+}
+
+.search-ok {
+    display: flex;
+    justify-content: flex-end; /* Posisikan ke kanan */
+    margin-bottom: 15px;
+  }
+  
+  .search-input {
+    padding: 8px;
+    width: 300px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  .pelanggaran-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .pelanggaran-table th,
+  .pelanggaran-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .pelanggaran-table th {
+    background-color: #f0f0f0;
+  }
+  
+  .pelanggaran-table img {
+    width: 55px;
+    height: 55px;
+    border-radius: 4px;
+  }
+  
+  .btn-edit {
+    padding: 6px 10px;
+    margin-right: 5px;
+    background-color: #ffc107;
+    border: none;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .btn-delete {
+    padding: 6px 10px;
+    background-color: #dc3545;
+    border: none;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .btn-edit:hover {
+    background-color: #e0a800;
+  }
+  
+  .btn-delete:hover {
+    background-color: #c82333;
+  }
+  

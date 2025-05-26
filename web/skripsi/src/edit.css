@@ -1,0 +1,124 @@
+.modal-content-data {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 450px;
+  max-width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.modal-content-data img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.modal-content-data input[type="text"],
+.modal-content-data input[type="date"] {
+  width: 95%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.edit-buttons-data {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.btn-save-data, .btn-cancel-data {
+  width: 48%;
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-left: 20px;
+}
+
+.btn-save-data {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.btn-cancel-data {
+  background-color: #f44336;
+  color: white;
+}
+
+.modal-overlay-data {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.photo-upload-data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.profile-photo-data {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.update-icon-data {
+  position: absolute;
+  top: 60px;
+  bottom: 0px;
+  right: 80px;
+  cursor: pointer;
+  width: 15px;
+  height: 15px;
+  background-color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: scale(0.18);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.update-icon-data img {
+  width: 15px;
+  height: 15px;
+}
+
+input[type="file"] {
+  display: none;
+  margin-right: 50px;
+}
+
+.file-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

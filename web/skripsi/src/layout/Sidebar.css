@@ -1,0 +1,71 @@
+.sidebar {
+  width: 185px;
+  height: 785px;
+  background-color: #98adea;
+  color: #000000;
+  padding: 40px 20px 10px 20px;
+  box-sizing: border-box;
+  position: fixed;
+  top: 67.5px;
+  left: 10px;
+
+
+  border: 1px solid #cbd5e1; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  border-top-left-radius: 20px;    
+  border-top-right-radius: 20px;   
+  border-bottom-left-radius: 20px;  
+  border-bottom-right-radius: 20px;
+  z-index: 1000;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  margin-bottom: 30px;
+}
+
+.sidebar a {
+  display: flex;
+  align-items: center;
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: 500;
+  padding: 12px 9px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+  -webkit-transition: background-color 0.2s;
+  -moz-transition: background-color 0.2s;
+  -ms-transition: background-color 0.2s;
+  -o-transition: background-color 0.2s;
+}
+
+.sidebar a:hover {
+  background-color: #1e293b;
+  color: white;
+}
+
+.menu-icon {
+  width: 28px;
+  height: 28px;
+  margin-right: 20px;
+  object-fit: contain;
+  
+}
+.sidebar a:hover .menu-icon {
+  filter: invert(1);
+}
+
+
+.logout{
+  margin-top: 360px;
+}
