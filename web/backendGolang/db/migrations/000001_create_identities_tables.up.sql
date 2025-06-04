@@ -16,6 +16,7 @@ CREATE TABLE data (
     jenispelanggaran VARCHAR(255) NOT NULL,
     lokasi VARCHAR(20) NOT NULL,
     waktu DATE,
+    kecepatan VARCHAR(255) NOT NULL,
     gambar VARCHAR(255) NOT NULL,
     created_at TIMESTAMPTZ(6),
     updated_at TIMESTAMPTZ(6)

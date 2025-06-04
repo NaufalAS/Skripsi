@@ -23,7 +23,6 @@ func NewSektorDataService(datarepo datarepo.DataRepository) *DataServiceImpl {
 	}
 }
 
-
 // Fungsi untuk menyimpan file foto
 func saveFile(file multipart.File, destination string) error {
 	// Membuat file baru di lokasi tujuan
@@ -71,6 +70,7 @@ func (service *DataServiceImpl) SaveData(request web.PostDataRequest, file multi
 		Lokasi:           request.Lokasi,
 		Date:             request.Date,
 		Gambar:           request.Gambar,
+		Kecepatan:        request.Kecepatan,
 	}
 
 	savedata, err := service.datarepo.SaveData(newData)
@@ -86,23 +86,27 @@ func (service *DataServiceImpl) SaveData(request web.PostDataRequest, file multi
 		"lokasi":            savedata.Lokasi,
 		"tanggal":           savedata.Date,
 		"gambar":            savedata.Gambar,
+		"kecepatan":         savedata.Kecepatan,
 	}
 
 	return response, nil
 }
 
-func (service *DataServiceImpl) GetUser() ([]entity.DataEntity, error) {
-	getData, err := service.datarepo.GetListData()
+func (service *DataServiceImpl) GetDataList(filters string, limit int, page int) ([]entity.DataEntity, int, int, int, *int, *int, error) {
+	// Call the GetListData method with filters, limit, and page parameters
+	getData, totalcount, currentPage, totalPages, nextPage, prevPage, err := service.datarepo.GetListData(filters, limit, page)
 	if err != nil {
-		return nil, err
+		return nil, 0, 0, 0, nil, nil, err
 	}
 
+	// Convert the domain.Data to entity.DataEntity
 	dataEntities := entity.ToDataListEntity(getData)
 
-	return dataEntities, nil
+	// Return the dataEntities along with pagination information
+	return dataEntities, totalcount, currentPage, totalPages, nextPage, prevPage, nil
 }
 
-func(service *DataServiceImpl) GetDataById(id int)(entity.DataEntity, error){
+func (service *DataServiceImpl) GetDataById(id int) (entity.DataEntity, error) {
 	getDataService, err := service.datarepo.GetDataById(id)
 	if err != nil {
 		return entity.DataEntity{}, err
@@ -119,16 +123,16 @@ func (service *DataServiceImpl) DeleteData(id int) error {
 	}
 
 	// Periksa apakah Gambar mengandung prefix 'public/pelanggaran/'
-imageFileName := filepath.Base(data.Gambar) // hanya ambil nama file dari path apa pun
-imagePath := filepath.Join("public", "pelanggaran", imageFileName)
+	imageFileName := filepath.Base(data.Gambar) // hanya ambil nama file dari path apa pun
+	imagePath := filepath.Join("public", "pelanggaran", imageFileName)
 
-fmt.Println("Path gambar: ", imagePath)
+	fmt.Println("Path gambar: ", imagePath)
 
-if _, err := os.Stat(imagePath); err == nil {
-	if err := os.Remove(imagePath); err != nil {
-		return fmt.Errorf("gagal menghapus gambar: %v", err)
+	if _, err := os.Stat(imagePath); err == nil {
+		if err := os.Remove(imagePath); err != nil {
+			return fmt.Errorf("gagal menghapus gambar: %v", err)
+		}
 	}
-}
 	// Hapus produk dari database
 	return service.datarepo.DeleteDataId(id)
 }
@@ -195,61 +199,65 @@ if _, err := os.Stat(imagePath); err == nil {
 // }
 
 func (service *DataServiceImpl) UpdateDataId(Id int, req web.UpdateDataRequest, file multipart.File) (map[string]interface{}, error) {
-    // 1. Ambil data lama
-    oldData, err := service.datarepo.GetDataById(Id)
-    if err != nil {
-        return nil, fmt.Errorf("data not found")
-    }
+	// 1. Ambil data lama
+	oldData, err := service.datarepo.GetDataById(Id)
+	if err != nil {
+		return nil, fmt.Errorf("data not found")
+	}
 
-    // 2. Siapkan struct baru dari data lama
-    updatedData := oldData
+	// 2. Siapkan struct baru dari data lama
+	updatedData := oldData
 
-    // 3. Update field yang ada di request
-    if req.JenisKendaraan != "" {
-        updatedData.JenisKendaraan = req.JenisKendaraan
-    }
-    if req.JenisPelanggaran != "" {
-        updatedData.JenisPelanggaran = req.JenisPelanggaran
-    }
-    if req.Lokasi != "" {
-        updatedData.Lokasi = req.Lokasi
-    }
-    if !req.Date.IsZero() {
-        updatedData.Date = req.Date
-    }
+	// 3. Update field yang ada di request
+	if req.JenisKendaraan != "" {
+		updatedData.JenisKendaraan = req.JenisKendaraan
+	}
+	if req.JenisPelanggaran != "" {
+		updatedData.JenisPelanggaran = req.JenisPelanggaran
+	}
+	if req.Lokasi != "" {
+		updatedData.Lokasi = req.Lokasi
+	}
+	if req.Kecepatan != "" {
+		updatedData.Kecepatan = req.Kecepatan
+	}
+	if !req.Date.IsZero() {
+		updatedData.Date = req.Date
+	}
 
-    // 4. Jika ada file gambar baru, simpan dan update path gambar
-    if file != nil {
-        // Hapus gambar lama
-        oldProfilePath := filepath.Join("public", "pelanggaran", filepath.Base(oldData.Gambar))
-        if _, err := os.Stat(oldProfilePath); err == nil {
-            _ = os.Remove(oldProfilePath)
-        }
+	// 4. Jika ada file gambar baru, simpan dan update path gambar
+	if file != nil {
+		// Hapus gambar lama
+		oldProfilePath := filepath.Join("public", "pelanggaran", filepath.Base(oldData.Gambar))
+		if _, err := os.Stat(oldProfilePath); err == nil {
+			_ = os.Remove(oldProfilePath)
+		}
 
-        // Generate nama file baru dan simpan file
-        newFileName := helper.GenerateRandomFileName(filepath.Ext(req.Gambar))
-        newProfilePath := filepath.Join("public", "pelanggaran", newFileName)
-        if err := saveFile(file, newProfilePath); err != nil {
-            return nil, fmt.Errorf("failed to save image: %v", err)
-        }
+		// Generate nama file baru dan simpan file
+		newFileName := helper.GenerateRandomFileName(filepath.Ext(req.Gambar))
+		newProfilePath := filepath.Join("public", "pelanggaran", newFileName)
+		if err := saveFile(file, newProfilePath); err != nil {
+			return nil, fmt.Errorf("failed to save image: %v", err)
+		}
 
-        updatedData.Gambar = "/public/pelanggaran/" + newFileName
-    }
+		updatedData.Gambar = "/public/pelanggaran/" + newFileName
+	}
 
-    // 5. Update data di repository
-    result, errUpdate := service.datarepo.UpdateDaataId(Id, updatedData)
-    if errUpdate != nil {
-        return nil, errUpdate
-    }
+	// 5. Update data di repository
+	result, errUpdate := service.datarepo.UpdateDaataId(Id, updatedData)
+	if errUpdate != nil {
+		return nil, errUpdate
+	}
 
-    // 6. Buat response
-    response := map[string]interface{}{
-        "jenis_kendaraan":   result.JenisKendaraan,
-        "gambar":            result.Gambar,
-        "jenis_pelanggaran": result.JenisPelanggaran,
-        "lokasi":            result.Lokasi,
-        "date":              result.Date,
-    }
+	// 6. Buat response
+	response := map[string]interface{}{
+		"jenis_kendaraan":   result.JenisKendaraan,
+		"gambar":            result.Gambar,
+		"jenis_pelanggaran": result.JenisPelanggaran,
+		"lokasi":            result.Lokasi,
+		"date":              result.Date,
+		"kecepatan":         result.Kecepatan,
+	}
 
-    return response, nil
+	return response, nil
 }

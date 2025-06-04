@@ -1,67 +1,149 @@
-.dashboard-repots{
+.dashboard-repots {
   margin-top: 30px;
   margin-left: 10px;
 }
 
+.top-bar {
+  display: flex;
+  justify-content: space-between; /* Ensure space between items */
+  align-items: center;
+  padding: 10px;
+  flex-direction: row-reverse;  /* Reverses the order of the child elements */
+  margin-top: 30px;
+}
+
 .search-ok {
-    display: flex;
-    justify-content: flex-end; /* Posisikan ke kanan */
-    margin-bottom: 15px;
-  }
-  
-  .search-input {
-    padding: 8px;
-    width: 300px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-  
-  .pelanggaran-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .pelanggaran-table th,
-  .pelanggaran-table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-  }
-  
-  .pelanggaran-table th {
-    background-color: #f0f0f0;
-  }
-  
-  .pelanggaran-table img {
-    width: 55px;
-    height: 55px;
-    border-radius: 4px;
-  }
-  
-  .btn-edit {
-    padding: 6px 10px;
-    margin-right: 5px;
-    background-color: #ffc107;
-    border: none;
-    color: #fff;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .btn-delete {
-    padding: 6px 10px;
-    background-color: #dc3545;
-    border: none;
-    color: #fff;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .btn-edit:hover {
-    background-color: #e0a800;
-  }
-  
-  .btn-delete:hover {
-    background-color: #c82333;
-  }
-  
+  display: flex;
+  justify-content: flex-end;  /* Align search to the right */
+}
+
+.page-info {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;  /* Align page info to the left */
+}
+
+.search-input {
+  padding: 8px;
+  width: 300px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+
+/* Wrapper untuk tabel dengan scroll */
+.table-wrapper {
+  max-height: 600px;  /* Sesuaikan tinggi maksimal */
+  overflow-y: auto;   /* Membuat scroll vertikal saat data melebihi tinggi */
+  margin-bottom: 20px; /* Memberikan jarak ke bawah */
+}
+
+.pelanggaran-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Membuat header tetap di atas saat scroll */
+.pelanggaran-table th {
+  background-color: #f0f0f0;
+  position: sticky;
+  top: 0; /* Tetap di atas saat scroll */
+  z-index: 1; /* Menjaga agar header berada di atas konten tabel */
+}
+
+.pelanggaran-table th,
+.pelanggaran-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.pelanggaran-table img {
+  width: 55px;
+  height: 55px;
+  border-radius: 4px;
+}
+
+.btn-edit {
+  padding: 6px 10px;
+  margin-right: 5px;
+  background-color: #ffc107;
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-delete {
+  padding: 6px 10px;
+  background-color: #dc3545;
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-edit:hover {
+  background-color: #e0a800;
+}
+
+.btn-delete:hover {
+  background-color: #c82333;
+}
+
+.pagination-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center; /* Membuat pagination berada di tengah */
+  align-items: center;
+}
+
+.pagination button,
+.pagination span {
+  padding: 8px 16px;
+  margin: 0 5px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination button:hover {
+  background-color: #f0f0f0;
+}
+
+.pagination span {
+  font-weight: bold;
+  color: #333;
+}
+
+.pagination button.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.pagination .prev,
+.pagination .next {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.pagination .prev:hover,
+.pagination .next:hover {
+  background-color: #0056b3;
+}
+
+.data-info span {
+  font-weight: normal;
+  font-size: 15px;
+}

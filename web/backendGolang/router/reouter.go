@@ -3,12 +3,16 @@ package router
 import (
 	"net/http"
 	"skripsi/app"
+	analiticscontroller "skripsi/controller/analitics"
 	datacontroller "skripsi/controller/data"
 	usercontroller "skripsi/controller/user"
 	"skripsi/helper"
 	"skripsi/model"
+	query_builder_data "skripsi/query_builder/data_qeury"
+	analiticsrepo "skripsi/repository/analitics"
 	datarepo "skripsi/repository/data"
 	userrepo "skripsi/repository/user"
+	analiticsservice "skripsi/service/analitics"
 	dataservice "skripsi/service/data"
 	userservice "skripsi/service/user"
 
@@ -28,9 +32,14 @@ func RegisterUserRoute(prefix string, e *echo.Echo) {
 	userService := userservice.NewSektorUsahaService(userRepo)
 	userController := usercontroller.NewSektorUsahaController(userService)
 
-	datarepo := datarepo.NewDataRepository(db)
+	dataQueryBuilder := query_builder_data.NewDataQueryBuilder(db)
+	datarepo := datarepo.NewDataRepository(db, dataQueryBuilder)
 	dataService := dataservice.NewSektorDataService(datarepo)
 	dataController := datacontroller.NewDataController(dataService)
+
+	analiticsRepo := analiticsrepo.NewAnalticsRepository(db)
+	analiticsService := analiticsservice.NewAnaliticsService(analiticsRepo)
+	analiticsController := analiticscontroller.NewAnaliticsController(analiticsService)
 
 	
 	g := e.Group(prefix)
@@ -44,11 +53,14 @@ func RegisterUserRoute(prefix string, e *echo.Echo) {
 	authRoute.PUT("/password/:id", userController.UpdatePasswordController, JWTProtection())
 
 	dataRoute := g.Group("/data")
-	dataRoute.POST("/post", dataController.PostDataController, JWTProtection())
+	dataRoute.POST("/post", dataController.PostDataController)
 	dataRoute.GET("/list", dataController.GetListDataController, JWTProtection())
 	dataRoute.GET("/:id", dataController.GetDataByIdController, JWTProtection())
 	dataRoute.DELETE("/delete/:id", dataController.DeleteDataId, JWTProtection())
 	dataRoute.PUT("/update/:id", dataController.UpdateDataByIdController, JWTProtection())
+
+	analiticsRoute := g.Group("/analitics")
+	analiticsRoute.GET("/list", analiticsController.GetAnalyticsDataController)
 }
 func JWTProtection() echo.MiddlewareFunc {
 		return echojwt.WithConfig(echojwt.Config{

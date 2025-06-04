@@ -4,7 +4,9 @@ import (
 	"log"
 	"mime/multipart"
 	"net/http"
+	"skripsi/helper"
 	"skripsi/model"
+	"skripsi/model/entity"
 	"skripsi/model/web"
 	dataservice "skripsi/service/data"
 	"strconv"
@@ -49,6 +51,7 @@ func (controller *DataControllerImpl) PostDataController(c echo.Context) error {
 		JenisKendaraan:   c.FormValue("jenis_kendaraan"),
 		JenisPelanggaran: c.FormValue("jenis_pelanggaran"),
 		Lokasi:           c.FormValue("lokasi"),
+		Kecepatan:           c.FormValue("kecepatan"),
 		Date:             parsedDate,
 		Gambar:           fileHeader.Filename,
 	}
@@ -68,14 +71,34 @@ func (controller *DataControllerImpl) PostDataController(c echo.Context) error {
 }
 
 func (controller *DataControllerImpl) GetListDataController(c echo.Context) error {
-	getDataController, errGetDataController := controller.DataService.GetUser()
+	// Extract query parameters for filters, limit, and page
+	filters, limit, page := helper.ExtractFilter(c.QueryParams())
 
+	// Call service to get data list and pagination data
+	getDataController, totalCount, currentPage, totalPages, nextPage, prevPage, errGetDataController := controller.DataService.GetDataList(filters, limit, page)
 	if errGetDataController != nil {
 		return c.JSON(http.StatusInternalServerError, model.ResponseToClient(http.StatusInternalServerError, "error", errGetDataController.Error()))
 	}
 
-	return c.JSON(http.StatusOK, model.ResponseToClient(http.StatusOK, "berhasil melihat seluruh list User", getDataController))
+	if getDataController == nil {
+		getDataController = []entity.DataEntity{}
+	}
+
+	// Prepare pagination data
+	pagination := model.Pagination{
+		CurrentPage:  currentPage,
+		NextPage:     nextPage,
+		PrevPage:     prevPage,
+		TotalPages:   totalPages,
+		TotalRecords: totalCount,
+	}
+
+	// Create response with pagination and data
+	response := model.ResponseToClientpagi(http.StatusOK, "true", "Successfully fetched all data", pagination, getDataController)
+
+	return c.JSON(http.StatusOK, response)
 }
+
 
 func (controller *DataControllerImpl) GetDataByIdController(c echo.Context) error{
 	IdData := c.Param("id")
@@ -115,6 +138,7 @@ func (controller *DataControllerImpl) UpdateDataByIdController(c echo.Context) e
 	// Ambil form values
 	name := c.FormValue("jeniskendaraan")
 	email := c.FormValue("jenispelanggaran")
+	kecepatan := c.FormValue("kecepatan")
 	phoneNumber := c.FormValue("lokasi")
 	dateString := c.FormValue("date")
 
@@ -152,6 +176,7 @@ func (controller *DataControllerImpl) UpdateDataByIdController(c echo.Context) e
 		JenisPelanggaran: email,
 		Lokasi:           phoneNumber,
 		Gambar:           fileName,
+		Kecepatan: 		  kecepatan,
 	}
 	if isDateProvided {
 		req.Date = parsedDate

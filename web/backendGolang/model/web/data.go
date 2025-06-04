@@ -8,6 +8,7 @@ type PostDataRequest struct {
 	Lokasi           string    `json:"lokasi"`
 	Date             time.Time `json:"date"`
 	Gambar           string    `json:"gambar"`
+	Kecepatan   	 string	   `json:"kecepatan"`
 }
 
 type UpdateDataRequest struct {
@@ -16,4 +17,5 @@ type UpdateDataRequest struct {
 	Lokasi           string    `json:"lokasi"`
 	Date             time.Time `json:"date"`
 	Gambar           string    ` json:"gambar"`
+	Kecepatan 		 string    `json:"kecepatan"`
 }

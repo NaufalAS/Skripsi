@@ -9,6 +9,7 @@ type Data struct {
 	Lokasi  string `gorm:"column:lokasi"`
 	Date time.Time `gorm:"column:waktu"`
 	Gambar string `gorm:"column:gambar"`
+	Kecepatan string `gorm:"column:kecepatan"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

@@ -8,6 +8,7 @@ function EditModal({ id, onClose, onUpdated }) {
     jenispelanggaran: '',
     lokasi: '',
     date: '',
+    kecepatan: '',
   });
 
   const [imageUrl, setImageUrl] = useState('/default.jpg');
@@ -30,6 +31,7 @@ function EditModal({ id, onClose, onUpdated }) {
           jenispelanggaran: data.jenispelanggaran,
           lokasi: data.lokasi,
           date: data.date.slice(0, 10),
+          lokasi: data.kecepatan,
         });
 
         if (data.gambar) {
@@ -68,6 +70,7 @@ function EditModal({ id, onClose, onUpdated }) {
     formDataToSend.append('jenispelanggaran', formData.jenispelanggaran);
     formDataToSend.append('lokasi', formData.lokasi);
     formDataToSend.append('date', formData.date);
+    formDataToSend.append('date', formData.kecepatan);
 
     if (imageFile) {
       formDataToSend.append('gambar', imageFile); // Append image file
@@ -140,6 +143,13 @@ function EditModal({ id, onClose, onUpdated }) {
               type="date"
               name="date"
               value={formData.date}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              name="kecepatan"
+              value={formData.kecepatan}
               onChange={handleChange}
               required
             />
